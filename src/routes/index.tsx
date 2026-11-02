@@ -146,10 +146,9 @@ function Index() {
                   onSend={send}
                   loading={loading}
                   onAttach={() => {
-                    if (hasMessages) { update(active.id, (c) => ({ ...c, messages: [] })); }
-                    setDoc(null);
+                    if (hasMessages) { newChat(); toast("New chat started — upload your document"); return; }
                     setUploadKey((k) => k + 1);
-                    toast("Choose a document to upload");
+                    toast("Use the upload area to add a document");
                   }}
                 />
                 <p className="mt-2 text-center text-[11px] text-subtle">Sample answers shown — AI analysis isn't connected yet.</p>
