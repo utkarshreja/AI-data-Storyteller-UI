@@ -3,6 +3,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
+import bgAsset from "@/assets/ui-background.avif.asset.json";
 import { Navbar } from "@/components/analyzer/Navbar";
 import { Sidebar } from "@/components/analyzer/Sidebar";
 import { DocumentUpload, UploadedFileCard } from "@/components/analyzer/DocumentUpload";
@@ -108,7 +109,15 @@ function Index() {
 
   return (
     <TooltipProvider delayDuration={300}>
-      <div className="flex h-screen flex-col bg-background text-foreground">
+      <div
+        className="flex h-screen flex-col bg-background text-foreground"
+        style={{
+          backgroundImage: `linear-gradient(rgba(10, 14, 23, 0.55), rgba(10, 14, 23, 0.7)), url(${bgAsset.url})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundAttachment: "fixed",
+        }}
+      >
         <Navbar onMenu={() => setDrawer(true)} onHome={() => setActiveId(chats[0]!.id)} />
         <div className="flex min-h-0 flex-1">
           <div className="hidden md:flex">
