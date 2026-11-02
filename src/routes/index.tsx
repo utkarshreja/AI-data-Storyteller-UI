@@ -3,6 +3,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
+import bgAsset from "@/assets/ui-background.avif.asset.json";
 import { Navbar } from "@/components/analyzer/Navbar";
 import { Sidebar } from "@/components/analyzer/Sidebar";
 import { DocumentUpload, UploadedFileCard } from "@/components/analyzer/DocumentUpload";
