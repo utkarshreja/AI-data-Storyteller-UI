@@ -39,7 +39,7 @@ function Index() {
   const [share, setShare] = useState(false);
   const [uploadKey, setUploadKey] = useState(0);
 
-  const active = chats.find((c) => c.id === activeId) ?? chats[0];
+  const active = (chats.find((c) => c.id === activeId) ?? chats[0])!;
   const update = (id: string, fn: (c: Chat) => Chat) => setChats((cs) => cs.map((c) => (c.id === id ? fn(c) : c)));
 
   const newChat = () => {
@@ -96,7 +96,7 @@ function Index() {
       setChats((cs) => {
         const rest = cs.filter((c) => c.id !== id);
         if (rest.length === 0) { const c = { id: uid(), title: "New chat", messages: [], doc: null }; setActiveId(c.id); return [c]; }
-        if (id === activeId) setActiveId(rest[0].id);
+        if (id === activeId) setActiveId(rest[0]!.id);
         return rest;
       });
       toast("Chat deleted");
@@ -109,7 +109,7 @@ function Index() {
   return (
     <TooltipProvider delayDuration={300}>
       <div className="flex h-screen flex-col bg-background text-foreground">
-        <Navbar onMenu={() => setDrawer(true)} onHome={() => setActiveId(chats[0].id)} />
+        <Navbar onMenu={() => setDrawer(true)} onHome={() => setActiveId(chats[0]!.id)} />
         <div className="flex min-h-0 flex-1">
           <div className="hidden md:flex">
             <Sidebar {...sidebarProps} collapsed={collapsed} onToggle={() => setCollapsed((v) => !v)} />

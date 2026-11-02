@@ -15,15 +15,15 @@ export function Markdown({ content }: { content: string }) {
   const out: ReactNode[] = [];
   let i = 0;
   while (i < lines.length) {
-    const line = lines[i];
+    const line = lines[i] ?? "";
     if (line.startsWith("|")) {
       const rows: string[][] = [];
-      while (i < lines.length && lines[i].startsWith("|")) {
-        const cells = lines[i].split("|").slice(1, -1).map((c) => c.trim());
+      while (i < lines.length && (lines[i] ?? "").startsWith("|")) {
+        const cells = (lines[i] ?? "").split("|").slice(1, -1).map((c) => c.trim());
         if (!cells.every((c) => /^-+$/.test(c))) rows.push(cells);
         i++;
       }
-      const [head, ...body] = rows;
+      const [head = [], ...body] = rows;
       out.push(
         <div key={i} className="my-3 overflow-x-auto rounded-lg border border-border">
           <table className="w-full text-sm">
@@ -45,8 +45,8 @@ export function Markdown({ content }: { content: string }) {
     if (/^[-*] /.test(line) || /^\d+\. /.test(line)) {
       const ordered = /^\d+\. /.test(line);
       const items: string[] = [];
-      while (i < lines.length && (ordered ? /^\d+\. /.test(lines[i]) : /^[-*] /.test(lines[i]))) {
-        items.push(lines[i].replace(/^([-*]|\d+\.) /, ""));
+      while (i < lines.length && (ordered ? /^\d+\. /.test((lines[i] ?? "")) : /^[-*] /.test((lines[i] ?? "")))) {
+        items.push((lines[i] ?? "").replace(/^([-*]|\d+\.) /, ""));
         i++;
       }
       const Tag = ordered ? "ol" : "ul";

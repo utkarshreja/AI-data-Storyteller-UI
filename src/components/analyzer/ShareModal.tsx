@@ -44,7 +44,7 @@ export function ShareModal({ open, onOpenChange }: { open: boolean; onOpenChange
             className="flex gap-2"
             onSubmit={(e) => {
               e.preventDefault();
-              if (!/^\S+@\S+\.\S+$/.test(email)) return toast.error("Enter a valid email");
+              if (!/^\S+@\S+\.\S+$/.test(email)) { toast.error("Enter a valid email"); return; }
               toast.success(`Invite prepared for ${email}`);
               setEmail("");
             }}
