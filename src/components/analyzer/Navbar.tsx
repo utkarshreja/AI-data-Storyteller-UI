@@ -64,7 +64,7 @@ export function Navbar({ onMenu, onHome }: { onMenu: () => void; onHome: () => v
   );
 
   return (
-    <header className="relative flex h-14 shrink-0 items-center justify-between border-b border-border bg-sidebar px-3 md:px-4">
+    <header className="relative flex h-14 shrink-0 items-center justify-between glass border-b border-border bg-sidebar px-3 md:px-4">
       <div className="flex items-center gap-1">
         <button onClick={onMenu} aria-label="Open chats" className="grid size-9 place-items-center rounded-lg text-muted-foreground hover:bg-hover md:hidden">
           <Menu className="size-5" />
@@ -130,7 +130,7 @@ export function Navbar({ onMenu, onHome }: { onMenu: () => void; onHome: () => v
       <ShareModal open={share} onOpenChange={setShare} />
 
       <Dialog open={settings} onOpenChange={setSettings}>
-        <DialogContent className="border-border bg-card sm:max-w-md">
+        <DialogContent className="glass border-border bg-popover sm:max-w-md">
           <DialogHeader>
             <DialogTitle>Settings</DialogTitle>
             <DialogDescription>Personalize your workspace.</DialogDescription>
@@ -147,7 +147,7 @@ export function Navbar({ onMenu, onHome }: { onMenu: () => void; onHome: () => v
       </Dialog>
 
       <Dialog open={help} onOpenChange={setHelp}>
-        <DialogContent className="border-border bg-card sm:max-w-md">
+        <DialogContent className="glass border-border bg-popover sm:max-w-md">
           <DialogHeader>
             <DialogTitle>Help & Support</DialogTitle>
             <DialogDescription>Get the most out of AI Data Analyzer.</DialogDescription>
