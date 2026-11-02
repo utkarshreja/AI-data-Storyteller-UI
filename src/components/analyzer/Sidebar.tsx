@@ -24,7 +24,7 @@ export function Sidebar({ chats, activeId, collapsed, onToggle, onSelect, onNew,
 
   if (collapsed) {
     return (
-      <aside className="flex w-14 shrink-0 flex-col items-center gap-2 border-r border-border bg-sidebar py-3">
+      <aside className="flex w-14 shrink-0 flex-col items-center gap-2 glass border-r border-border bg-sidebar py-3">
         <Tooltip><TooltipTrigger asChild>
           <button onClick={onToggle} aria-label="Expand sidebar" className="grid size-9 place-items-center rounded-lg text-muted-foreground hover:bg-hover hover:text-foreground"><PanelLeftOpen className="size-4" /></button>
         </TooltipTrigger><TooltipContent side="right">Expand</TooltipContent></Tooltip>
@@ -36,7 +36,7 @@ export function Sidebar({ chats, activeId, collapsed, onToggle, onSelect, onNew,
   }
 
   return (
-    <aside className="flex h-full w-[250px] shrink-0 flex-col border-r border-border bg-sidebar">
+    <aside className="flex h-full w-[250px] shrink-0 flex-col glass border-r border-border bg-sidebar">
       <div className="flex items-center justify-between px-4 pt-4 pb-3">
         <span className="text-[11px] font-semibold tracking-[1.5px] text-subtle">CHATS</span>
         {onToggle && (

@@ -16,7 +16,7 @@ export function MessageInput({ onSend, loading, onAttach }: { onSend: (t: string
   };
 
   return (
-    <div className="flex min-h-[60px] w-full items-end gap-1 rounded-[30px] border border-border bg-surface py-2 pl-5 pr-2 transition-colors focus-within:border-primary/70 focus-within:shadow-glow">
+    <div className="flex min-h-[60px] w-full items-end gap-1 rounded-[30px] glass border border-border bg-surface py-2 pl-5 pr-2 transition-colors focus-within:border-primary/70 focus-within:shadow-glow">
       <textarea
         ref={ref}
         rows={1}

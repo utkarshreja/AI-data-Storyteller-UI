@@ -20,7 +20,7 @@ export function ShareModal({ open, onOpenChange }: { open: boolean; onOpenChange
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="border-border bg-card sm:max-w-md">
+      <DialogContent className="glass border-border bg-popover sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Share Workspace</DialogTitle>
           <DialogDescription>Sharing is a preview — links are not live yet.</DialogDescription>

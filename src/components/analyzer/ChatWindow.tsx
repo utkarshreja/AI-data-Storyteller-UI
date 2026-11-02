@@ -20,7 +20,7 @@ function AIResponse({ msg, onRegenerate, isLast }: { msg: ChatMessage; onRegener
     <div className="flex gap-3">
       <span className="mt-0.5 grid size-7 shrink-0 place-items-center rounded-lg bg-gradient-accent"><Sparkles className="size-3.5 text-primary-foreground" /></span>
       <div className="min-w-0 flex-1">
-        <div className="rounded-xl border border-border bg-surface px-4 py-3"><Markdown content={msg.content} /></div>
+        <div className="rounded-xl glass border border-border bg-surface px-4 py-3"><Markdown content={msg.content} /></div>
         <div className="mt-1 flex gap-0.5">
           <Action label={copied ? "Copied" : "Copy"} onClick={() => { navigator.clipboard?.writeText(msg.content).catch(() => {}); setCopied(true); setTimeout(() => setCopied(false), 1200); }}>
             {copied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
@@ -53,7 +53,7 @@ export function ChatWindow({ messages, loading, onRegenerate }: { messages: Chat
       {loading && (
         <div className="flex gap-3">
           <span className="grid size-7 place-items-center rounded-lg bg-gradient-accent"><Sparkles className="size-3.5 text-primary-foreground" /></span>
-          <div className="flex items-center gap-1 rounded-xl border border-border bg-surface px-4 py-3">
+          <div className="flex items-center gap-1 rounded-xl glass border border-border bg-surface px-4 py-3">
             {[0, 150, 300].map((d) => <span key={d} className="size-1.5 animate-bounce rounded-full bg-primary" style={{ animationDelay: `${d}ms` }} />)}
           </div>
         </div>

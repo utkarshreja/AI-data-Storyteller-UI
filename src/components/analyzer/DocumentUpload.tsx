@@ -6,7 +6,7 @@ import { formatSize, validateFile, type UploadedDoc } from "./types";
 
 export function UploadedFileCard({ doc, onRemove, onReplace }: { doc: UploadedDoc; onRemove: () => void; onReplace?: () => void }) {
   return (
-    <div className="flex items-center gap-3 rounded-xl border border-border bg-surface px-3 py-2.5">
+    <div className="flex items-center gap-3 glass rounded-xl border border-border bg-surface px-3 py-2.5">
       <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-primary/15 text-primary"><FileText className="size-4" /></span>
       <div className="min-w-0 flex-1">
         <div className="truncate text-sm font-medium">{doc.name}</div>
@@ -70,7 +70,7 @@ export function DocumentUpload({ doc, onUploaded, onRemove }: { doc: UploadedDoc
         onDragLeave={() => setDrag(false)}
         onDrop={(e) => { e.preventDefault(); setDrag(false); handle(e.dataTransfer.files?.[0]); }}
         className={cn(
-          "group flex min-h-[200px] cursor-pointer flex-col items-center justify-center rounded-2xl border border-dashed bg-surface px-6 py-8 text-center transition-all",
+          "group flex min-h-[200px] cursor-pointer flex-col items-center justify-center rounded-2xl glass border border-dashed bg-surface px-6 py-8 text-center transition-all",
           drag ? "border-primary bg-primary/10 shadow-glow" : "border-border-strong hover:border-primary/70 hover:bg-elevated",
           error && "border-destructive/70",
         )}
