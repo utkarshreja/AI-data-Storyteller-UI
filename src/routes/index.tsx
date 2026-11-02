@@ -109,22 +109,21 @@ function Index() {
 
   return (
     <TooltipProvider delayDuration={300}>
-      <div
-        className="flex h-screen flex-col bg-background text-foreground"
-        style={{
-          backgroundImage: `linear-gradient(rgba(10, 14, 23, 0.55), rgba(10, 14, 23, 0.7)), url(${bgAsset.url})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundAttachment: "fixed",
-        }}
-      >
+      <div className="app-bg" aria-hidden>
+        <div className="app-bg-grid" style={{ backgroundImage: `url(${bgAsset.url})` }} />
+        <div className="app-bg-orb o1" />
+        <div className="app-bg-orb o2" />
+        <div className="app-bg-orb o3" />
+        <div className="app-bg-vignette" />
+      </div>
+      <div className="relative z-10 flex h-screen flex-col text-foreground">
         <Navbar onMenu={() => setDrawer(true)} onHome={() => setActiveId(chats[0]!.id)} />
         <div className="flex min-h-0 flex-1">
           <div className="hidden md:flex">
             <Sidebar {...sidebarProps} collapsed={collapsed} onToggle={() => setCollapsed((v) => !v)} />
           </div>
           <Sheet open={drawer} onOpenChange={setDrawer}>
-            <SheetContent side="left" className="w-[260px] border-border bg-sidebar p-0">
+            <SheetContent side="left" className="glass w-[260px] border-border bg-sidebar p-0">
               <SheetTitle className="sr-only">Chats</SheetTitle>
               <Sidebar {...sidebarProps} collapsed={false} />
             </SheetContent>
