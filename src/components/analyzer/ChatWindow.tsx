@@ -17,7 +17,7 @@ function AIResponse({ msg, onRegenerate, isLast }: { msg: ChatMessage; onRegener
   const [copied, setCopied] = useState(false);
   const [fb, setFb] = useState<"up" | "down" | null>(null);
   return (
-    <div className="flex gap-3">
+    <div className="rise-in flex gap-3">
       <span className="mt-0.5 grid size-7 shrink-0 place-items-center rounded-lg bg-gradient-accent"><Sparkles className="size-3.5 text-primary-foreground" /></span>
       <div className="min-w-0 flex-1">
         <div className="rounded-xl glass border border-border bg-surface px-4 py-3"><Markdown content={msg.content} /></div>
@@ -43,7 +43,7 @@ export function ChatWindow({ messages, loading, onRegenerate }: { messages: Chat
     <div className="mx-auto w-full max-w-3xl space-y-5">
       {messages.map((m) =>
         m.role === "user" ? (
-          <div key={m.id} className="flex justify-end">
+          <div key={m.id} className="rise-in flex justify-end">
             <div className="max-w-[80%] whitespace-pre-wrap rounded-2xl rounded-br-md border border-primary/25 bg-primary/15 px-4 py-2.5 text-sm">{m.content}</div>
           </div>
         ) : (

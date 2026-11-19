@@ -138,13 +138,13 @@ function Index() {
                 </div>
               ) : (
                 <div className="flex h-full flex-col items-center justify-center gap-6">
-                  <div className="text-center">
+                  <div className="rise-in text-center">
                     <p className="font-display text-2xl font-semibold md:text-3xl">
-                      Understand your data, <span className="text-gradient-accent">instantly</span>
+                      Understand your data, <span className="text-gradient-accent text-shimmer">instantly</span>
                     </p>
                     <p className="mt-2 text-sm text-muted-foreground">Upload a document, then ask questions in plain language.</p>
                   </div>
-                  <DocumentUpload key={`${active.id}-${uploadKey}`} doc={active.doc} onUploaded={setDoc} onRemove={() => setDoc(null)} />
+                  <div className="rise-in w-full flex justify-center" style={{ animationDelay: "150ms" }}><DocumentUpload key={`${active.id}-${uploadKey}`} doc={active.doc} onUploaded={setDoc} onRemove={() => setDoc(null)} /></div>
                 </div>
               )}
             </div>
