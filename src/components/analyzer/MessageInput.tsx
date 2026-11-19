@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { ArrowUp, Loader2, Mic, Paperclip } from "lucide-react";
+import { ArrowUp, AudioLines, Loader2, MoreHorizontal, Paperclip, Search } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { toast } from "sonner";
 
@@ -15,35 +15,37 @@ export function MessageInput({ onSend, loading, onAttach }: { onSend: (t: string
     if (ref.current) ref.current.style.height = "auto";
   };
 
+  const chip = "flex h-10 items-center gap-2 rounded-xl border border-border bg-elevated px-3.5 text-sm text-foreground/90 transition hover:border-primary/40 hover:bg-hover";
+
   return (
-    <div className="flex min-h-[60px] w-full items-end gap-1 rounded-[30px] glass border border-border bg-surface py-2 pl-5 pr-2 transition-colors focus-within:border-primary/70 focus-within:shadow-glow">
+    <div className="glass w-full rounded-3xl border border-border bg-surface p-3 shadow-2xl transition-colors focus-within:border-primary/40 focus-within:shadow-glow">
       <textarea
         ref={ref}
-        rows={1}
+        rows={2}
         value={value}
-        placeholder="Ask anything about your document..."
+        placeholder="Ask anything ..."
         onChange={(e) => {
           setValue(e.target.value);
           e.target.style.height = "auto";
           e.target.style.height = `${Math.min(e.target.scrollHeight, 160)}px`;
         }}
         onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } }}
-        className="max-h-40 flex-1 resize-none bg-transparent py-2.5 text-sm text-foreground outline-none placeholder:text-subtle"
+        className="max-h-40 w-full resize-none bg-transparent px-2 pt-1 text-sm text-foreground outline-none placeholder:text-muted-foreground"
       />
-      <Tooltip><TooltipTrigger asChild>
-        <button onClick={onAttach} aria-label="Attach file" className="grid size-10 place-items-center rounded-full text-muted-foreground hover:bg-hover hover:text-foreground"><Paperclip className="size-4" /></button>
-      </TooltipTrigger><TooltipContent>Attach file</TooltipContent></Tooltip>
-      <Tooltip><TooltipTrigger asChild>
-        <button onClick={() => toast("Voice input is coming soon")} aria-label="Voice input" className="hidden size-10 place-items-center rounded-full text-muted-foreground hover:bg-hover hover:text-foreground sm:grid"><Mic className="size-4" /></button>
-      </TooltipTrigger><TooltipContent>Voice input</TooltipContent></Tooltip>
-      <button
-        onClick={send}
-        disabled={!canSend}
-        aria-label="Send message"
-        className="grid size-10 shrink-0 place-items-center rounded-full bg-gradient-accent text-primary-foreground transition hover:opacity-90 disabled:bg-none disabled:bg-elevated disabled:text-subtle"
-      >
-        {loading ? <Loader2 className="size-4 animate-spin" /> : <ArrowUp className="size-4" />}
-      </button>
+      <div className="mt-2 flex items-center gap-2">
+        <button onClick={() => toast("Search across your documents is coming soon")} className={chip}><Search className="size-4" /> <span className="hidden sm:inline">Search</span></button>
+        <button onClick={onAttach} className={chip}><Paperclip className="size-4" /> <span className="hidden sm:inline">Upload File</span></button>
+        <button onClick={() => toast("More tools coming soon")} aria-label="More" className="grid size-10 place-items-center rounded-full border border-border bg-elevated text-foreground/80 hover:bg-hover"><MoreHorizontal className="size-4" /></button>
+        <div className="ml-auto flex items-center gap-2">
+          <Tooltip><TooltipTrigger asChild>
+            <button onClick={() => toast("Voice input is coming soon")} aria-label="Voice input" className="grid size-10 place-items-center rounded-full border border-border bg-elevated text-muted-foreground hover:text-foreground"><AudioLines className="size-4" /></button>
+          </TooltipTrigger><TooltipContent>Voice input</TooltipContent></Tooltip>
+          <button onClick={send} disabled={!canSend} aria-label="Send message"
+            className="grid size-10 place-items-center rounded-full bg-foreground text-background transition hover:scale-105 disabled:opacity-60 disabled:hover:scale-100">
+            {loading ? <Loader2 className="size-4 animate-spin" /> : <ArrowUp className="size-4" />}
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

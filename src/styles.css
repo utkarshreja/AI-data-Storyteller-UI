@@ -140,7 +140,7 @@
 .app-bg { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; background: var(--background); }
 .app-bg-grid { position: absolute; inset: -120px; background-size: 600px auto; background-repeat: repeat; opacity: 0.18; mix-blend-mode: screen; animation: grid-pan 60s linear infinite; }
 .app-bg-orb { position: absolute; border-radius: 9999px; filter: blur(110px); animation: orb-float 20s ease-in-out infinite alternate; }
-.app-bg-orb.o1 { width: 720px; height: 620px; right: -160px; top: -220px; background: radial-gradient(circle, oklch(0.75 0.16 55), oklch(0.6 0.17 40) 60%, transparent 75%); opacity: 0.55; animation-name: orb-breathe; animation-duration: 12s; }
+.app-bg-orb.o1 { display:none; width: 720px; height: 620px; right: -160px; top: -220px; background: radial-gradient(circle, oklch(0.75 0.16 55), oklch(0.6 0.17 40) 60%, transparent 75%); opacity: 0.55; animation-name: orb-breathe; animation-duration: 12s; }
 .app-bg-orb.o2 { width: 460px; height: 460px; left: -140px; bottom: -160px; background: oklch(0.62 0.17 40); opacity: 0.28; animation-duration: 24s; animation-delay: -8s; }
 .app-bg-orb.o3 { width: 320px; height: 320px; left: 40%; top: 35%; background: oklch(0.85 0.12 78); opacity: 0.12; animation-duration: 28s; }
 .app-bg-vignette { position: absolute; inset: 0; background: radial-gradient(ellipse at 60% 20%, transparent 25%, color-mix(in oklab, var(--background) 90%, transparent) 85%); }
@@ -153,3 +153,11 @@
 .text-shimmer { background-size: 200% auto; animation: shimmer 6s linear infinite; }
 @media (prefers-reduced-motion: reduce) { .app-bg-grid, .app-bg-orb, .rise-in, .text-shimmer { animation: none; } }
 .glass { backdrop-filter: blur(16px) saturate(130%); -webkit-backdrop-filter: blur(16px) saturate(130%); }
+.upgrade-glow { background: radial-gradient(circle, oklch(0.75 0.16 55 / 0.9), oklch(0.6 0.17 40 / 0.4) 50%, transparent 70%); filter: blur(20px); animation: orb-breathe 8s ease-in-out infinite alternate; }
+.app-frame { background: oklch(0.1 0.004 50 / 0.85); }
+.frame-glow { position: absolute; right: -10%; top: -30%; width: 70%; height: 90%; border-radius: 9999px; background: radial-gradient(ellipse at 60% 40%, oklch(0.78 0.15 60 / 0.85), oklch(0.62 0.17 42 / 0.45) 40%, transparent 70%); filter: blur(60px); animation: orb-breathe 12s ease-in-out infinite alternate; pointer-events: none; }
+@keyframes float-y { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+.float-y { animation: float-y 4s ease-in-out infinite; }
+.tool-card { transition: transform .3s ease, border-color .3s ease, background-color .3s ease; }
+.tool-card:hover { transform: translateY(-3px); border-color: color-mix(in oklab, var(--primary) 40%, transparent); }
+@media (prefers-reduced-motion: reduce) { .upgrade-glow, .frame-glow, .float-y { animation: none; } }

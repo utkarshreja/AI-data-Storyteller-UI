@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { Copy, MessageSquare, MoreHorizontal, PanelLeftClose, PanelLeftOpen, Pencil, Plus, Share2, Trash2 } from "lucide-react";
+import { Search, Sparkles, SquarePen, Copy, MessageSquare, MoreHorizontal, PanelLeftClose, PanelLeftOpen, Pencil, Plus, Share2, Trash2 } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import type { Chat } from "./types";
+import { Logo } from "./Navbar";
+import { toast } from "sonner";
 
 type Props = {
   chats: Chat[];
@@ -24,7 +26,7 @@ export function Sidebar({ chats, activeId, collapsed, onToggle, onSelect, onNew,
 
   if (collapsed) {
     return (
-      <aside className="flex w-14 shrink-0 flex-col items-center gap-2 glass border-r border-border bg-sidebar py-3">
+      <aside className="flex w-14 shrink-0 flex-col items-center gap-2 glass rounded-3xl border border-border bg-sidebar py-3">
         <Tooltip><TooltipTrigger asChild>
           <button onClick={onToggle} aria-label="Expand sidebar" className="grid size-9 place-items-center rounded-lg text-muted-foreground hover:bg-hover hover:text-foreground"><PanelLeftOpen className="size-4" /></button>
         </TooltipTrigger><TooltipContent side="right">Expand</TooltipContent></Tooltip>
@@ -36,27 +38,31 @@ export function Sidebar({ chats, activeId, collapsed, onToggle, onSelect, onNew,
   }
 
   return (
-    <aside className="flex h-full w-[250px] shrink-0 flex-col glass border-r border-border bg-sidebar">
-      <div className="flex items-center justify-between px-4 pt-4 pb-3">
-        <span className="text-[11px] font-semibold tracking-[1.5px] text-subtle">CHATS</span>
+    <aside className="flex h-full w-[280px] shrink-0 flex-col overflow-hidden rounded-3xl glass border border-border bg-sidebar">
+      <div className="flex items-center justify-between px-4 pt-4 pb-5">
+        <Logo onClick={() => onSelect(chats[0]?.id ?? "")} />
+        <div className="flex items-center gap-0.5">
+        <button onClick={() => toast("Search chats coming soon")} aria-label="Search chats" className="grid size-8 place-items-center rounded-md text-muted-foreground hover:bg-hover hover:text-foreground"><Search className="size-4" /></button>
         {onToggle && (
           <Tooltip><TooltipTrigger asChild>
             <button onClick={onToggle} aria-label="Collapse sidebar" className="grid size-7 place-items-center rounded-md text-muted-foreground hover:bg-hover hover:text-foreground"><PanelLeftClose className="size-4" /></button>
           </TooltipTrigger><TooltipContent side="right">Collapse</TooltipContent></Tooltip>
         )}
+        </div>
       </div>
       <div className="px-3">
-        <button onClick={onNew} className="flex w-full items-center justify-center gap-2 rounded-lg border border-primary/30 bg-primary/10 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary/20">
-          <Plus className="size-4" /> New Chat
+        <button onClick={onNew} className="relative flex w-full items-center gap-2.5 overflow-hidden rounded-xl border border-border bg-gradient-to-r from-elevated to-transparent px-4 py-3 text-sm font-medium text-primary transition hover:from-hover after:absolute after:inset-x-6 after:bottom-0 after:h-px after:bg-gradient-to-r after:from-transparent after:via-primary after:to-transparent">
+          <SquarePen className="size-4" /> New Chat
         </button>
       </div>
-      <nav className="mt-4 flex-1 space-y-0.5 overflow-y-auto px-2 pb-4">
+      <div className="mt-6 px-4 pb-2 text-xs font-medium tracking-wide text-muted-foreground">RECENT CHATS</div>
+      <nav className="flex-1 space-y-0.5 overflow-y-auto px-2 pb-4">
         {chats.map((c) => (
           <div
             key={c.id}
             className={cn(
               "group flex items-center gap-2 rounded-lg px-2.5 py-2 text-sm transition-colors",
-              c.id === activeId ? "bg-primary/15 text-foreground" : "text-muted-foreground hover:bg-hover hover:text-foreground",
+              c.id === activeId ? "bg-elevated text-foreground" : "text-muted-foreground hover:bg-hover hover:text-foreground",
             )}
           >
             <MessageSquare className={cn("size-4 shrink-0", c.id === activeId && "text-primary")} />
@@ -89,6 +95,15 @@ export function Sidebar({ chats, activeId, collapsed, onToggle, onSelect, onNew,
           </div>
         ))}
       </nav>
+      <div className="relative m-3 overflow-hidden rounded-2xl border border-border bg-elevated p-4 text-center">
+        <div className="upgrade-glow pointer-events-none absolute -bottom-16 -left-10 size-48 rounded-full" />
+        <div className="relative">
+          <span className="mx-auto mb-3 grid size-11 place-items-center rounded-full bg-gradient-accent shadow-glow"><Sparkles className="size-5 text-primary-foreground" /></span>
+          <div className="font-display text-lg font-medium">Upgrade to Pro</div>
+          <p className="mt-1 text-xs text-muted-foreground">Bigger files, faster answers and unlimited chats</p>
+          <button onClick={() => toast("Pro plans are coming soon")} className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-foreground py-2.5 text-sm font-medium text-background transition hover:opacity-90"><Sparkles className="size-4" /> Upgrade</button>
+        </div>
+      </div>
     </aside>
   );
 }

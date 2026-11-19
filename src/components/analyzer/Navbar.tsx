@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Bell, HelpCircle, Menu, MoreVertical, Settings, Share2, Sparkles } from "lucide-react";
+import { Bell, Brain, HelpCircle, Lightbulb, Menu, MoreVertical, Settings, Share2 } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger,
@@ -13,10 +13,10 @@ import { toast } from "sonner";
 export function Logo({ onClick }: { onClick: () => void }) {
   return (
     <button onClick={onClick} className="flex items-center gap-2.5 rounded-lg px-1 py-1 transition-opacity hover:opacity-90" aria-label="Go to dashboard">
-      <span className="grid size-8 place-items-center rounded-lg bg-gradient-accent shadow-glow">
-        <Sparkles className="size-4 text-primary-foreground" />
+      <span className="grid size-10 place-items-center rounded-xl border border-border bg-elevated">
+        <Brain className="size-5 text-primary" />
       </span>
-      <span className="hidden font-display text-sm font-semibold sm:inline">AI Data Analyzer</span>
+      <span className="text-sm font-medium">AI Data Analyzer</span>
     </button>
   );
 }
@@ -25,7 +25,7 @@ function IconBtn({ label, children, onClick }: { label: string; children: React.
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <button onClick={onClick} aria-label={label} className="relative grid size-9 place-items-center rounded-lg text-muted-foreground transition-colors hover:bg-hover hover:text-foreground">
+        <button onClick={onClick} aria-label={label} className="relative grid size-10 place-items-center rounded-full bg-elevated/70 text-muted-foreground transition-colors hover:bg-hover hover:text-foreground">
           {children}
         </button>
       </TooltipTrigger>
@@ -64,25 +64,28 @@ export function Navbar({ onMenu, onHome }: { onMenu: () => void; onHome: () => v
   );
 
   return (
-    <header className="relative flex h-14 shrink-0 items-center justify-between glass border-b border-border bg-sidebar px-3 md:px-4">
+    <header className="relative flex h-16 shrink-0 items-center justify-between px-4 md:justify-end md:px-8">
       <div className="flex items-center gap-1">
         <button onClick={onMenu} aria-label="Open chats" className="grid size-9 place-items-center rounded-lg text-muted-foreground hover:bg-hover md:hidden">
           <Menu className="size-5" />
         </button>
-        <Logo onClick={onHome} />
+        <div className="md:hidden"><Logo onClick={onHome} /></div>
       </div>
 
-      <h1 className="pointer-events-none absolute left-1/2 -translate-x-1/2 font-display text-xs font-semibold tracking-[1px] text-foreground sm:text-sm">
-        AI DATA ANALYZER
-      </h1>
+      <nav className="mr-6 hidden items-center gap-6 text-sm md:flex">
+        <button onClick={onHome} className="relative pb-1 text-primary after:absolute after:inset-x-0 after:-bottom-1 after:h-px after:bg-gradient-to-r after:from-transparent after:via-primary after:to-transparent">Dashboard</button>
+        <button onClick={() => toast("Library is coming soon")} className="pb-1 text-muted-foreground transition hover:text-foreground">Library</button>
+        <button onClick={() => setHelp(true)} className="pb-1 text-foreground/90 transition hover:text-foreground">Help & Support</button>
+        <button onClick={() => setShare(true)} className="pb-1 text-foreground/90 transition hover:text-foreground">Share</button>
+      </nav>
 
       <div className="hidden items-center gap-0.5 md:flex">
-        <IconBtn label="Share" onClick={() => setShare(true)}><Share2 className="size-4" /></IconBtn>
+        <IconBtn label="Tips" onClick={() => setHelp(true)}><Lightbulb className="size-4" /></IconBtn>
         <DropdownMenu onOpenChange={(o) => o && setUnread(false)}>
           <Tooltip>
             <TooltipTrigger asChild>
               <DropdownMenuTrigger asChild>
-                <button aria-label="Notifications" className="relative grid size-9 place-items-center rounded-lg text-muted-foreground hover:bg-hover hover:text-foreground">
+                <button aria-label="Notifications" className="relative grid size-10 place-items-center rounded-full bg-elevated/70 text-muted-foreground hover:bg-hover hover:text-foreground">
                   <Bell className="size-4" />
                   {unread && <span className="absolute right-2 top-2 size-2 rounded-full bg-primary ring-2 ring-sidebar" />}
                 </button>
@@ -102,10 +105,9 @@ export function Navbar({ onMenu, onHome }: { onMenu: () => void; onHome: () => v
           </DropdownMenuContent>
         </DropdownMenu>
         <IconBtn label="Settings" onClick={() => setSettings(true)}><Settings className="size-4" /></IconBtn>
-        <IconBtn label="Help" onClick={() => setHelp(true)}><HelpCircle className="size-4" /></IconBtn>
-        <DropdownMenu>
+                <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button aria-label="Profile" className="ml-2 grid size-8 place-items-center rounded-full bg-gradient-accent text-xs font-semibold text-primary-foreground ring-2 ring-border transition hover:ring-primary">AM</button>
+            <button aria-label="Profile" className="ml-2 grid size-10 place-items-center rounded-full bg-gradient-accent text-xs font-semibold text-primary-foreground ring-2 ring-border transition hover:ring-primary">AM</button>
           </DropdownMenuTrigger>
           {profileMenu}
         </DropdownMenu>

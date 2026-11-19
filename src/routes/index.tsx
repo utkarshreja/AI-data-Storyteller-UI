@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
+import { ArrowRight, Brain } from "lucide-react";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import bgAsset from "@/assets/ui-background.avif.asset.json";
@@ -24,6 +25,13 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
+const TOOLS = [
+  { title: "Upload a Document", desc: "Add a PDF, DOCX, XLSX, CSV or TXT file up to 20 MB to start asking questions.", prompt: "", upload: true },
+  { title: "Summarize Key Points", desc: "Get a short, clear summary of the most important facts in your file.", prompt: "Summarize the key points of this document" },
+  { title: "Find Trends & Patterns", desc: "Spot changes over time, outliers and patterns hidden in your data.", prompt: "What trends and patterns do you see in this data?" },
+  { title: "Build a Comparison Table", desc: "Turn messy numbers into a tidy table you can copy and share.", prompt: "Create a comparison table of the main figures" },
+];
+
 const seed: Chat[] = [
   { id: "c1", title: "Q3 sales breakdown", messages: [], doc: null },
   { id: "c2", title: "Customer churn CSV", messages: [], doc: null },
@@ -39,6 +47,7 @@ function Index() {
   const [loading, setLoading] = useState(false);
   const [share, setShare] = useState(false);
   const [uploadKey, setUploadKey] = useState(0);
+  const [showUpload, setShowUpload] = useState(false);
 
   const active = (chats.find((c) => c.id === activeId) ?? chats[0])!;
   const update = (id: string, fn: (c: Chat) => Chat) => setChats((cs) => cs.map((c) => (c.id === id ? fn(c) : c)));
@@ -106,6 +115,12 @@ function Index() {
   };
 
   const hasMessages = active.messages.length > 0;
+  const openUpload = () => {
+    if (hasMessages) { newChat(); toast("New chat started — upload your document"); }
+    setShowUpload(true);
+    setUploadKey((k) => k + 1);
+  };
+  const input = <MessageInput onSend={send} loading={loading} onAttach={openUpload} />;
 
   return (
     <TooltipProvider delayDuration={300}>
@@ -116,52 +131,58 @@ function Index() {
         <div className="app-bg-orb o3" />
         <div className="app-bg-vignette" />
       </div>
-      <div className="relative z-10 flex h-screen flex-col text-foreground">
-        <Navbar onMenu={() => setDrawer(true)} onHome={() => setActiveId(chats[0]!.id)} />
-        <div className="flex min-h-0 flex-1">
-          <div className="hidden md:flex">
+      <div className="relative z-10 flex h-screen p-2 md:p-6">
+        <div className="app-frame relative flex min-h-0 flex-1 gap-4 overflow-hidden rounded-[28px] border border-border p-0 text-foreground shadow-2xl md:p-3">
+          <div className="frame-glow" />
+          <div className="relative hidden md:flex">
             <Sidebar {...sidebarProps} collapsed={collapsed} onToggle={() => setCollapsed((v) => !v)} />
           </div>
           <Sheet open={drawer} onOpenChange={setDrawer}>
-            <SheetContent side="left" className="glass w-[260px] border-border bg-sidebar p-0">
+            <SheetContent side="left" className="glass w-[290px] border-border bg-background p-2">
               <SheetTitle className="sr-only">Chats</SheetTitle>
               <Sidebar {...sidebarProps} collapsed={false} />
             </SheetContent>
           </Sheet>
 
-          <main className="flex min-w-0 flex-1 flex-col">
-            <div className="flex-1 overflow-y-auto px-4 py-6 md:px-8">
-              {hasMessages ? (
-                <div className="space-y-5">
-                  {active.doc && <div className="mx-auto max-w-3xl"><UploadedFileCard doc={active.doc} onRemove={() => setDoc(null)} /></div>}
-                  <ChatWindow messages={active.messages} loading={loading} onRegenerate={regenerate} />
-                </div>
-              ) : (
-                <div className="flex h-full flex-col items-center justify-center gap-6">
-                  <div className="rise-in text-center">
-                    <p className="font-display text-2xl font-semibold md:text-3xl">
-                      Understand your data, <span className="text-gradient-accent text-shimmer">instantly</span>
-                    </p>
-                    <p className="mt-2 text-sm text-muted-foreground">Upload a document, then ask questions in plain language.</p>
+          <main className="relative flex min-w-0 flex-1 flex-col">
+            <Navbar onMenu={() => setDrawer(true)} onHome={() => setActiveId(chats[0]!.id)} />
+            {hasMessages ? (
+              <>
+                <div className="flex-1 overflow-y-auto px-4 py-6 md:px-8">
+                  <div className="space-y-5">
+                    {active.doc && <div className="mx-auto max-w-3xl"><UploadedFileCard doc={active.doc} onRemove={() => setDoc(null)} /></div>}
+                    <ChatWindow messages={active.messages} loading={loading} onRegenerate={regenerate} />
                   </div>
-                  <div className="rise-in w-full flex justify-center" style={{ animationDelay: "150ms" }}><DocumentUpload key={`${active.id}-${uploadKey}`} doc={active.doc} onUploaded={setDoc} onRemove={() => setDoc(null)} /></div>
                 </div>
-              )}
-            </div>
-            <div className="flex justify-center px-3 pb-4 pt-2 md:px-0 md:pb-6">
-              <div className="w-full md:w-[90%] md:max-w-4xl">
-                <MessageInput
-                  onSend={send}
-                  loading={loading}
-                  onAttach={() => {
-                    if (hasMessages) { newChat(); toast("New chat started — upload your document"); return; }
-                    setUploadKey((k) => k + 1);
-                    toast("Use the upload area to add a document");
-                  }}
-                />
-                <p className="mt-2 text-center text-[11px] text-subtle">Sample answers shown — AI analysis isn't connected yet.</p>
+                <div className="mx-auto w-full max-w-4xl px-3 pb-4 md:px-6">{input}</div>
+              </>
+            ) : (
+              <div className="flex-1 overflow-y-auto px-4 pb-10 md:px-10">
+                <div className="mx-auto flex max-w-4xl flex-col items-center pt-6 md:pt-10">
+                  <span className="rise-in float-y grid size-16 place-items-center rounded-2xl border border-border-strong bg-elevated shadow-glow"><Brain className="size-7 text-primary" /></span>
+                  <h2 className="rise-in mt-8 text-center font-display text-3xl font-medium md:text-4xl" style={{ animationDelay: "80ms" }}>Welcome Back <span className="text-gradient-accent text-shimmer">✨</span></h2>
+                  <p className="rise-in mt-3 text-center font-display text-3xl font-medium md:text-5xl" style={{ animationDelay: "160ms" }}>What Can I Help You Analyze Today?</p>
+                  <div className="rise-in mt-10 w-full" style={{ animationDelay: "240ms" }}>{input}</div>
+                  {(showUpload || active.doc) && (
+                    <div className="rise-in mt-4 flex w-full justify-center">
+                      <DocumentUpload key={`${active.id}-${uploadKey}`} doc={active.doc} onUploaded={setDoc} onRemove={() => setDoc(null)} />
+                    </div>
+                  )}
+                  <h3 className="rise-in mt-14 w-full font-display text-2xl font-medium text-foreground/80 md:text-3xl" style={{ animationDelay: "320ms" }}>Kickstart Your Analysis with These Tools</h3>
+                  <div className="mt-6 grid w-full gap-4 md:grid-cols-2">
+                    {TOOLS.map((t, i) => (
+                      <button key={t.title} onClick={() => (t.upload ? openUpload() : send(t.prompt))}
+                        className="tool-card rise-in glass rounded-3xl border border-border bg-surface p-6 text-left" style={{ animationDelay: `${400 + i * 80}ms` }}>
+                        <div className="text-lg font-medium">{t.title}</div>
+                        <p className="mt-2 text-sm text-muted-foreground">{t.desc}</p>
+                        <div className="mt-5 flex items-center gap-1.5 border-t border-border pt-4 text-sm">{t.upload ? "Upload now" : "Try it"} <ArrowRight className="size-3.5" /></div>
+                      </button>
+                    ))}
+                  </div>
+                  <p className="mt-8 text-center text-[11px] text-subtle">Sample answers shown — AI analysis isn't connected yet.</p>
+                </div>
               </div>
-            </div>
+            )}
           </main>
         </div>
         <ShareModal open={share} onOpenChange={setShare} />
