@@ -8,3 +8,7 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+## Rules
+
+- The brand mark is a transparent extracted PNG served from a CDN `.asset.json` pointer; never wrap it in a bordered or box-shadowed tile — use a `drop-shadow` filter so the glow follows the artwork's alpha, not its bounding box.

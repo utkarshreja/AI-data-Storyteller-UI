@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import bgAsset from "@/assets/ui-background.avif.asset.json";
-import logoTile from "@/assets/logo-tile.png.asset.json";
+import logoIcon from "@/assets/logo-icon.png.asset.json";
 import { Navbar } from "@/components/analyzer/Navbar";
 import { Sidebar } from "@/components/analyzer/Sidebar";
 import { DocumentUpload, UploadedFileCard } from "@/components/analyzer/DocumentUpload";
@@ -163,7 +163,7 @@ function Index() {
             ) : (
               <div className="flex-1 overflow-y-auto px-4 pb-10 md:px-10">
                 <div className="mx-auto flex max-w-4xl flex-col items-center pt-6 md:pt-10">
-                  <img src={logoTile.url} alt="AI Data Storyteller" className="rise-in float-y size-20 rounded-2xl border border-border-strong object-cover shadow-glow md:size-24" />
+                  <img src={logoIcon.url} alt="AI Data Storyteller" className="logo-mark rise-in float-y size-24 object-contain md:size-28" />
                   <h2 className="rise-in mt-8 text-center font-display text-3xl font-medium md:text-4xl" style={{ animationDelay: "80ms" }}>Welcome Back <span className="text-gradient-accent text-shimmer">✨</span></h2>
                   <p className="rise-in mt-3 text-center font-display text-3xl font-medium md:text-5xl" style={{ animationDelay: "160ms" }}>What Can I Help You Analyze Today?</p>
                   <div className="rise-in mt-10 w-full" style={{ animationDelay: "240ms" }}>{input}</div>

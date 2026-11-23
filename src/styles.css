@@ -157,6 +157,7 @@
 .text-shimmer { background-size: 200% auto; animation: shimmer 6s linear infinite; }
 @media (prefers-reduced-motion: reduce) { .app-bg-grid, .app-bg-orb, .app-bg-aurora, .app-bg-sweep, .rise-in, .text-shimmer { animation: none; } }
 .glass { backdrop-filter: blur(16px) saturate(130%); -webkit-backdrop-filter: blur(16px) saturate(130%); }
+.logo-mark { filter: drop-shadow(0 0 16px oklch(0.75 0.16 55 / 0.45)); }
 .upgrade-glow { background: radial-gradient(circle, oklch(0.75 0.16 55 / 0.9), oklch(0.6 0.17 40 / 0.4) 50%, transparent 70%); filter: blur(20px); animation: orb-breathe 8s ease-in-out infinite alternate; }
 .app-frame { background: oklch(0.1 0.004 50 / 0.85); }
 .frame-glow { position: absolute; right: -10%; top: -30%; width: 70%; height: 90%; border-radius: 9999px; background: radial-gradient(ellipse at 60% 40%, oklch(0.78 0.15 60 / 0.85), oklch(0.62 0.17 42 / 0.45) 40%, transparent 70%); filter: blur(60px); animation: orb-breathe 12s ease-in-out infinite alternate; pointer-events: none; }

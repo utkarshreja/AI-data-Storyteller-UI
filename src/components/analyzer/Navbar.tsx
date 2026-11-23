@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Bell, Lightbulb, Menu, MoreVertical, Settings } from "lucide-react";
-import logoTile from "@/assets/logo-tile.png.asset.json";
+import logoIcon from "@/assets/logo-icon.png.asset.json";
 import logoWordmark from "@/assets/logo-wordmark.png.asset.json";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import {
@@ -15,7 +15,7 @@ import { toast } from "sonner";
 export function Logo({ onClick }: { onClick: () => void }) {
   return (
     <button onClick={onClick} className="flex items-center gap-2.5 rounded-lg px-1 py-1 transition-opacity hover:opacity-90" aria-label="AI Data Storyteller — go to dashboard">
-      <img src={logoTile.url} alt="" aria-hidden className="size-11 shrink-0 rounded-xl border border-border object-cover shadow-glow" />
+      <img src={logoIcon.url} alt="" aria-hidden className="logo-mark size-12 shrink-0 object-contain" />
       <img src={logoWordmark.url} alt="AI Data Storyteller" className="h-9 w-auto max-w-[130px] object-contain object-left" />
     </button>
   );
