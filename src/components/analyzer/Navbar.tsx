@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { Bell, Brain, HelpCircle, Lightbulb, Menu, MoreVertical, Settings, Share2 } from "lucide-react";
+import { Bell, Lightbulb, Menu, MoreVertical, Settings } from "lucide-react";
+import logoTile from "@/assets/logo-tile.png.asset.json";
+import logoWordmark from "@/assets/logo-wordmark.png.asset.json";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import {
   DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger,
@@ -12,11 +14,9 @@ import { toast } from "sonner";
 
 export function Logo({ onClick }: { onClick: () => void }) {
   return (
-    <button onClick={onClick} className="flex items-center gap-2.5 rounded-lg px-1 py-1 transition-opacity hover:opacity-90" aria-label="Go to dashboard">
-      <span className="grid size-10 place-items-center rounded-xl border border-border bg-elevated">
-        <Brain className="size-5 text-primary" />
-      </span>
-      <span className="text-sm font-medium">AI Data Analyzer</span>
+    <button onClick={onClick} className="flex items-center gap-2.5 rounded-lg px-1 py-1 transition-opacity hover:opacity-90" aria-label="AI Data Storyteller — go to dashboard">
+      <img src={logoTile.url} alt="" aria-hidden className="size-11 shrink-0 rounded-xl border border-border object-cover shadow-glow" />
+      <img src={logoWordmark.url} alt="AI Data Storyteller" className="h-9 w-auto max-w-[130px] object-contain object-left" />
     </button>
   );
 }
@@ -152,7 +152,7 @@ export function Navbar({ onMenu, onHome }: { onMenu: () => void; onHome: () => v
         <DialogContent className="glass border-border bg-popover sm:max-w-md">
           <DialogHeader>
             <DialogTitle>Help & Support</DialogTitle>
-            <DialogDescription>Get the most out of AI Data Analyzer.</DialogDescription>
+            <DialogDescription>Get the most out of AI Data Storyteller.</DialogDescription>
           </DialogHeader>
           <ul className="space-y-2 pt-2 text-sm text-muted-foreground">
             <li className="rounded-lg border border-border bg-elevated px-3 py-2.5">Upload a PDF, DOCX, XLSX, CSV or TXT (max 20 MB).</li>

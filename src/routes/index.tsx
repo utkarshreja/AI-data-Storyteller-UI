@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
-import { ArrowRight, Brain } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import bgAsset from "@/assets/ui-background.avif.asset.json";
+import logoTile from "@/assets/logo-tile.png.asset.json";
 import { Navbar } from "@/components/analyzer/Navbar";
 import { Sidebar } from "@/components/analyzer/Sidebar";
 import { DocumentUpload, UploadedFileCard } from "@/components/analyzer/DocumentUpload";
@@ -16,9 +17,9 @@ import { mockResponse, uid, type Chat, type UploadedDoc } from "@/components/ana
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "AI Data Analyzer — Ask questions about your documents" },
+      { title: "AI Data Storyteller — Ask questions about your documents" },
       { name: "description", content: "Upload PDF, DOCX, XLSX, CSV or TXT files and get instant AI-powered answers, summaries and tables." },
-      { property: "og:title", content: "AI Data Analyzer" },
+      { property: "og:title", content: "AI Data Storyteller" },
       { property: "og:description", content: "Upload a document and ask anything about it." },
     ],
   }),
@@ -125,6 +126,8 @@ function Index() {
   return (
     <TooltipProvider delayDuration={300}>
       <div className="app-bg" aria-hidden>
+        <div className="app-bg-aurora" />
+        <div className="app-bg-sweep" />
         <div className="app-bg-grid" style={{ backgroundImage: `url(${bgAsset.url})` }} />
         <div className="app-bg-orb o1" />
         <div className="app-bg-orb o2" />
@@ -134,6 +137,7 @@ function Index() {
       <div className="relative z-10 flex h-screen p-2 md:p-6">
         <div className="app-frame relative flex min-h-0 flex-1 gap-4 overflow-hidden rounded-[28px] border border-border p-0 text-foreground shadow-2xl md:p-3">
           <div className="frame-glow" />
+          <div className="frame-glow-2" />
           <div className="relative hidden md:flex">
             <Sidebar {...sidebarProps} collapsed={collapsed} onToggle={() => setCollapsed((v) => !v)} />
           </div>
@@ -159,7 +163,7 @@ function Index() {
             ) : (
               <div className="flex-1 overflow-y-auto px-4 pb-10 md:px-10">
                 <div className="mx-auto flex max-w-4xl flex-col items-center pt-6 md:pt-10">
-                  <span className="rise-in float-y grid size-16 place-items-center rounded-2xl border border-border-strong bg-elevated shadow-glow"><Brain className="size-7 text-primary" /></span>
+                  <img src={logoTile.url} alt="AI Data Storyteller" className="rise-in float-y size-20 rounded-2xl border border-border-strong object-cover shadow-glow md:size-24" />
                   <h2 className="rise-in mt-8 text-center font-display text-3xl font-medium md:text-4xl" style={{ animationDelay: "80ms" }}>Welcome Back <span className="text-gradient-accent text-shimmer">✨</span></h2>
                   <p className="rise-in mt-3 text-center font-display text-3xl font-medium md:text-5xl" style={{ animationDelay: "160ms" }}>What Can I Help You Analyze Today?</p>
                   <div className="rise-in mt-10 w-full" style={{ animationDelay: "240ms" }}>{input}</div>

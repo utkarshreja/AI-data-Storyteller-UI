@@ -10,7 +10,7 @@ export function ShareModal({ open, onOpenChange }: { open: boolean; onOpenChange
   const [copied, setCopied] = useState(false);
   const [access, setAccess] = useState("restricted");
   const [email, setEmail] = useState("");
-  const link = "https://ai-data-analyzer.app/w/7f3k2q";
+  const link = "https://ai-data-storyteller.app/w/7f3k2q";
 
   const copy = async () => {
     try { await navigator.clipboard.writeText(link); } catch { /* ignore */ }
