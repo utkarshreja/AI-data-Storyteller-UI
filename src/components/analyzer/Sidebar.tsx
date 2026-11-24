@@ -3,6 +3,7 @@ import { Search, Sparkles, SquarePen, Copy, MessageSquare, MoreHorizontal, Panel
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
+import { SIDEBAR_MAX, SIDEBAR_MIN } from "@/hooks/use-sidebar-resize";
 import type { Chat } from "./types";
 import { Logo } from "./Navbar";
 import { toast } from "sonner";
@@ -18,9 +19,14 @@ type Props = {
   onDuplicate: (id: string) => void;
   onDelete: (id: string) => void;
   onShare: () => void;
+  width?: number;
+  resizing?: boolean;
+  onResizeStart?: (clientX: number) => void;
+  onResizeReset?: () => void;
+  onResizeNudge?: (delta: number) => void;
 };
 
-export function Sidebar({ chats, activeId, collapsed, onToggle, onSelect, onNew, onRename, onDuplicate, onDelete, onShare }: Props) {
+export function Sidebar({ chats, activeId, collapsed, onToggle, onSelect, onNew, onRename, onDuplicate, onDelete, onShare, width, resizing, onResizeStart, onResizeReset, onResizeNudge }: Props) {
   const [editing, setEditing] = useState<string | null>(null);
   const [draft, setDraft] = useState("");
 
@@ -38,7 +44,34 @@ export function Sidebar({ chats, activeId, collapsed, onToggle, onSelect, onNew,
   }
 
   return (
-    <aside className="flex h-full w-[280px] shrink-0 flex-col overflow-hidden rounded-3xl glass border border-border bg-sidebar">
+    <aside
+      style={{ width: width ?? "100%" }}
+      className={cn(
+        "relative flex h-full shrink-0 flex-col overflow-hidden rounded-3xl glass border border-border bg-sidebar",
+        !resizing && "transition-[width] duration-200 ease-out",
+      )}
+    >
+      {onResizeStart && (
+        <div
+          role="separator"
+          aria-orientation="vertical"
+          aria-label="Resize sidebar"
+          aria-valuenow={width ?? 0}
+          aria-valuemin={SIDEBAR_MIN}
+          aria-valuemax={SIDEBAR_MAX}
+          tabIndex={0}
+          onPointerDown={(e) => { e.preventDefault(); onResizeStart(e.clientX); }}
+          onDoubleClick={() => onResizeReset?.()}
+          onKeyDown={(e) => {
+            if (e.key === "ArrowLeft") { e.preventDefault(); onResizeNudge?.(-16); }
+            else if (e.key === "ArrowRight") { e.preventDefault(); onResizeNudge?.(16); }
+            else if (e.key === "Home") { e.preventDefault(); onResizeReset?.(); }
+          }}
+          className="group absolute inset-y-0 right-0 z-20 w-3 cursor-col-resize outline-none"
+        >
+          <span className={cn("absolute right-0 top-1/2 h-12 w-[3px] -translate-y-1/2 rounded-full transition-colors", resizing ? "bg-primary/80" : "bg-transparent group-hover:bg-primary/45 group-focus-visible:bg-primary/70")} />
+        </div>
+      )}
       <div className="flex items-center justify-between px-4 pt-4 pb-5">
         <Logo onClick={() => onSelect(chats[0]?.id ?? "")} />
         <div className="flex items-center gap-0.5">

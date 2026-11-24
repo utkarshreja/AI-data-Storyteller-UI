@@ -7,6 +7,7 @@ import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import bgAsset from "@/assets/ui-background.avif.asset.json";
 import logoIcon from "@/assets/logo-icon.png.asset.json";
 import { Navbar } from "@/components/analyzer/Navbar";
+import { useSidebarResize } from "@/hooks/use-sidebar-resize";
 import { Sidebar } from "@/components/analyzer/Sidebar";
 import { DocumentUpload, UploadedFileCard } from "@/components/analyzer/DocumentUpload";
 import { MessageInput } from "@/components/analyzer/MessageInput";
@@ -49,6 +50,7 @@ function Index() {
   const [share, setShare] = useState(false);
   const [uploadKey, setUploadKey] = useState(0);
   const [showUpload, setShowUpload] = useState(false);
+  const sidebar = useSidebarResize();
 
   const active = (chats.find((c) => c.id === activeId) ?? chats[0])!;
   const update = (id: string, fn: (c: Chat) => Chat) => setChats((cs) => cs.map((c) => (c.id === id ? fn(c) : c)));
@@ -139,7 +141,7 @@ function Index() {
           <div className="frame-glow" />
           <div className="frame-glow-2" />
           <div className="relative hidden md:flex">
-            <Sidebar {...sidebarProps} collapsed={collapsed} onToggle={() => setCollapsed((v) => !v)} />
+            <Sidebar {...sidebarProps} collapsed={collapsed} onToggle={() => setCollapsed((v) => !v)} width={sidebar.width} resizing={sidebar.dragging} onResizeStart={sidebar.begin} onResizeReset={sidebar.reset} onResizeNudge={sidebar.nudge} />
           </div>
           <Sheet open={drawer} onOpenChange={setDrawer}>
             <SheetContent side="left" className="glass w-[290px] border-border bg-background p-2">
