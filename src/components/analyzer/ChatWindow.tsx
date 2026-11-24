@@ -36,7 +36,11 @@ function AIResponse({ msg, onRegenerate, isLast }: { msg: ChatMessage; onRegener
 
 export function ChatWindow({ messages, loading, onRegenerate }: { messages: ChatMessage[]; loading: boolean; onRegenerate: () => void }) {
   const end = useRef<HTMLDivElement>(null);
-  useEffect(() => { end.current?.scrollIntoView({ behavior: "smooth" }); }, [messages.length, loading]);
+  useEffect(() => {
+    const el = end.current;
+    const scroller = el?.closest<HTMLElement>("[data-chat-scroll]");
+    if (scroller) scroller.scrollTo({ top: scroller.scrollHeight, behavior: "smooth" });
+  }, [messages.length, loading]);
   const lastAi = [...messages].reverse().find((m) => m.role === "ai")?.id;
 
   return (

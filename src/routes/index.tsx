@@ -154,7 +154,7 @@ function Index() {
             <Navbar onMenu={() => setDrawer(true)} onHome={() => setActiveId(chats[0]!.id)} />
             {hasMessages ? (
               <>
-                <div className="flex-1 overflow-y-auto px-4 py-6 md:px-8">
+                <div data-chat-scroll className="flex-1 overflow-y-auto px-4 py-6 md:px-8">
                   <div className="space-y-5">
                     {active.doc && <div className="mx-auto max-w-3xl"><UploadedFileCard doc={active.doc} onRemove={() => setDoc(null)} /></div>}
                     <ChatWindow messages={active.messages} loading={loading} onRegenerate={regenerate} />
