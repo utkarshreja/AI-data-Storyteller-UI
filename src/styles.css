@@ -167,3 +167,7 @@
 .tool-card { transition: transform .3s ease, border-color .3s ease, background-color .3s ease; }
 .tool-card:hover { transform: translateY(-3px); border-color: color-mix(in oklab, var(--primary) 40%, transparent); }
 @media (prefers-reduced-motion: reduce) { .upgrade-glow, .frame-glow, .frame-glow-2, .float-y { animation: none; } }
+
+/* Invisible scrollbars — scrolling still works, track hidden */
+* { scrollbar-width: none; -ms-overflow-style: none; }
+*::-webkit-scrollbar { width: 0; height: 0; display: none; }
