@@ -15,8 +15,8 @@ import { toast } from "sonner";
 export function Logo({ onClick }: { onClick: () => void }) {
   return (
     <button onClick={onClick} className="flex items-center gap-2.5 rounded-lg px-1 py-1 transition-opacity hover:opacity-90" aria-label="AI Data Storyteller — go to dashboard">
-      <img src={logoIcon.url} alt="" aria-hidden className="logo-mark size-12 shrink-0 object-contain" />
-      <img src={logoWordmark.url} alt="AI Data Storyteller" className="h-9 w-auto max-w-[130px] object-contain object-left" />
+      <img src={logoIcon.url} alt="" aria-hidden className="logo-mark size-9 shrink-0 object-contain" />
+      <img src={logoWordmark.url} alt="AI Data Storyteller" className="h-7 w-auto max-w-[110px] object-contain object-left" />
     </button>
   );
 }
